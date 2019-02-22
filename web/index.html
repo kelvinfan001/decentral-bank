@@ -51,6 +51,7 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="web3.min.js"></script>
+<script src="PiggyBankABI.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -70,6 +71,9 @@
 
     var contractAddress = web3.utils.toChecksumAddress("0x35c8248250a99615b1c8a2aebdf8759b23d5525d");
 
+    var PiggyBankContract = new web3.eth.Contract(abi, contractAddress);
+
+
     $('#contract-form').submit(function() {
         event.preventDefault();
         var fromAddress = $('#fromAddress').val();
@@ -77,13 +81,22 @@
 
         if (web3.utils.isAddress(fromAddress) != true) {
             alert('You did not enter a proper address');
-            return
+            return;
         }
 
         if (amount == 0) {
             alert('Please put in more than 0 in the piggy bank.');
             return;
         }
+
+        PiggyBankContract.methods.deposit().send({from: fromAddress, value: web3.utils.toWei(amount, 'ether')},
+            function(error, result){
+                if (error){
+                    console.log("error:" + error);
+                } else {
+                    $('#deposit-result').html('Success TX: <b>' + result + '</b>');
+                }
+            });
     });
 
     $('#get-balance-form').submit(function(){
