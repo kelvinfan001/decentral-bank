@@ -6,18 +6,18 @@ contract PiggyBank {
     address payable public receiver;
     address public constant approver = 0xF361d9B30A24EC2f1285C6D0F78C262b32B69C40;
 
-    function deposit(address payable _receiver) external payable {
+    function deposit() external payable {
         require(msg.value > 0);
         sender = msg.sender;
-        receiver = _receiver;
     }
 
     function viewApprover() external pure returns(address){
         return(approver);
     }
 
-    function withdraw() external {
+    function withdraw(address payable _receiver) external {
         require(msg.sender == approver);
+        receiver = _receiver;
         receiver.transfer(address(this).balance);
     }
 }
