@@ -4,7 +4,7 @@ contract PiggyBank {
 
     address public sender;
     address payable public receiver;
-    address public constant approver = 0xF361d9B30A24EC2f1285C6D0F78C262b32B69C40;
+    address public constant approver = 0x925834f2ae02AE2a0a659904678ef457fb00BaB2;
 
     function deposit() external payable {
         require(msg.value > 0);
