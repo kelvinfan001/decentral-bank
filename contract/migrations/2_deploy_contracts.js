@@ -1,5 +1,5 @@
-var PiggyBankFactoryContract = artifacts.require("PiggyBankFactory");
+var PiggyBank = artifacts.require("PiggyBank");
 
 module.exports = function(deployer) {
-    deployer.deploy(PiggyBankFactoryContract);
+    deployer.deploy(PiggyBank);
 };

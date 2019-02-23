@@ -32,7 +32,7 @@ $('#contract-form').submit(function() {
             if (error){
                 console.log("error:" + error);
             } else {
-                $('#deposit-result').html('Success TX: <b>' + result + '</b>');
+                $('#deposit-result').html('Successful Transaction: <b>' + result + '</b>');
             }
         });
 });

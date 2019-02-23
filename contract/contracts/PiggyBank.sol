@@ -1,43 +1,45 @@
 pragma solidity ^0.5.0;
 
-contract PiggyBankFactory {
-    address[] public deployedPiggyBanks;
-
-    function createPiggyBank(uint _goal) public {
-        PiggyBank newPiggyBank = new PiggyBank(_goal);
-
-        deployedPiggyBanks.push(address(newPiggyBank));
-    }
-
-    function getDeployedPiggyBanks() public view returns(address[] memory){
-        return deployedPiggyBanks;
-    }
-}
+//contract PiggyBankFactory {
+//    mapping(address => PiggyBank) public existingPiggyBanks;
+//
+//    address[] public deployedPiggyBanks;
+//
+//    function createPiggyBank(uint _goal) public {
+//        PiggyBank newPiggyBank = new PiggyBank(_goal);
+//
+//        existingPiggyBanks[address(msg.sender)] = newPiggyBank;
+//    }
+//
+//    function deposit(address _to) public {
+//        require(existingPiggyBanks[_to].goal() > 0); // requires _to to have a piggy bank.
+//        existingPiggyBanks[_to].deposit();
+//    }
+//}
 
 contract PiggyBank {
 
-    address payable public receiver;
-    address public owner;
+    mapping(address => uint256) public accountsToGoals;
+    mapping(address => uint256) public accountsToBalances;
 
-    uint public goal;
-
-    constructor(uint _goal) public {
-        owner = msg.sender;
-        goal = _goal;
+    function createPiggyBank(uint256 _goal) public {
+        require(_goal > 0);
+        accountsToBalances[msg.sender] = 0;
+        accountsToGoals[msg.sender] = _goal;
     }
+
 
     function deposit() external payable {
         require(msg.value > 0, "You cannot deposit 0.");
-    }
-
-    function viewOwner() external view returns(address){
-        return(owner);
+        require(accountsToGoals[msg.sender] != 0);
+        accountsToBalances[msg.sender] += msg.value;
     }
 
     function withdraw(address payable _receiver) external {
-        require(msg.sender == owner, "Sender is not the owner of this piggy bank.");
-        require(address(this).balance >= goal, "You have not reached your goal yet.");
-        receiver = _receiver;
-        receiver.transfer(address(this).balance);
+        uint256 goal = accountsToGoals[msg.sender];
+        uint256 balance = accountsToBalances[msg.sender];
+
+        require(balance >= goal, "You have not reached your goal yet.");
+        _receiver.transfer(balance);
     }
 }
