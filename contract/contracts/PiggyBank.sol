@@ -1,12 +1,29 @@
 pragma solidity ^0.5.0;
 
+contract PiggyBankFactory {
+    address[] public deployedPiggyBanks;
+
+    function createPiggyBank(uint _goal) public {
+        PiggyBank newPiggyBank = new PiggyBank(_goal);
+
+        deployedPiggyBanks.push(address(newPiggyBank));
+    }
+
+    function getDeployedPiggyBanks() public view returns(address[] memory){
+        return deployedPiggyBanks;
+    }
+}
+
 contract PiggyBank {
 
     address payable public receiver;
     address public owner;
 
-    constructor() public {
+    uint public goal;
+
+    constructor(uint _goal) public {
         owner = msg.sender;
+        goal = _goal;
     }
 
     function deposit() external payable {
@@ -19,6 +36,7 @@ contract PiggyBank {
 
     function withdraw(address payable _receiver) external {
         require(msg.sender == owner, "Sender is not the owner of this piggy bank.");
+        require(address(this).balance >= goal, "You have not reached your goal yet.");
         receiver = _receiver;
         receiver.transfer(address(this).balance);
     }

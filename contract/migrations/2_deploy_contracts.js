@@ -1,5 +1,5 @@
-var PiggyBankContract = artifacts.require("./PiggyBank.sol");
+var PiggyBankFactoryContract = artifacts.require("PiggyBankFactory");
 
 module.exports = function(deployer) {
-    deployer.deploy(PiggyBankContract);
+    deployer.deploy(PiggyBankFactoryContract);
 };
