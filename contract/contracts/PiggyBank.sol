@@ -1,22 +1,5 @@
 pragma solidity ^0.5.0;
 
-//contract PiggyBankFactory {
-//    mapping(address => PiggyBank) public existingPiggyBanks;
-//
-//    address[] public deployedPiggyBanks;
-//
-//    function createPiggyBank(uint _goal) public {
-//        PiggyBank newPiggyBank = new PiggyBank(_goal);
-//
-//        existingPiggyBanks[address(msg.sender)] = newPiggyBank;
-//    }
-//
-//    function deposit(address _to) public {
-//        require(existingPiggyBanks[_to].goal() > 0); // requires _to to have a piggy bank.
-//        existingPiggyBanks[_to].deposit();
-//    }
-//}
-
 contract PiggyBank {
 
     mapping(address => uint256) public accountsToGoals;
