@@ -19,7 +19,7 @@ contract PiggyBank {
       */
     function deposit() external payable {
         require(msg.value > 0, "You cannot deposit 0."); // make sure that user is depositing more than 0.
-        require(accountsToGoals[msg.sender] != 0);
+        require(accountsToGoals[msg.sender] != 0); // require sender to have a piggy bank.
         accountsToBalances[msg.sender] += msg.value;
     }
 
@@ -32,5 +32,13 @@ contract PiggyBank {
 
         require(balance >= goal, "You have not reached your goal yet."); // make sure that the goal has been reached.
         _receiver.transfer(balance);
+    }
+
+    /** @dev Function to view the current balance in sender's piggy bank.
+      * @return Returns the current balance in sender's piggy bank.
+      */
+    function viewBalance() public view returns(uint256) {
+        require(accountsToGoals[msg.sender] != 0); // require sender to have a piggy bank
+        return accountsToBalances[msg.sender];
     }
 }

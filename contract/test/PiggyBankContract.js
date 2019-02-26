@@ -80,6 +80,16 @@ contract('PiggyBankContract', function () {
         let afterBalance = await web3.eth.getBalance(contract.address);
         assert.notEqual(afterBalance.valueOf(), beforeBalance.valueOf(), "Balance should not be the same since the " +
             "withdrawal should have failed.");
-    })
+    });
 
+    it('views balance', async function(){
+        const accounts = await web3.eth.getAccounts();
+        const contract = await PiggyBank.deployed();
+
+        await contract.createPiggyBank(10, {from: accounts[0]});
+        await contract.deposit({value: 8, from: accounts[0]});
+
+        let balance = await contract.viewBalance({from: accounts[0]});
+        assert.equal(balance, 8, "Balance in this piggy bank should be 8.");
+    });
 });
