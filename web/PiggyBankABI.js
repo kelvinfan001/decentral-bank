@@ -1,48 +1,58 @@
 let abi = [
     {
         "constant": true,
-        "inputs": [],
-        "name": "approver",
-        "outputs": [
+        "inputs": [
             {
                 "name": "",
                 "type": "address"
             }
         ],
+        "name": "accountsToBalance",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "payable": false,
         "stateMutability": "view",
         "type": "function",
-        "signature": "0x141a8dd8"
+        "signature": "0x10cd9c69"
     },
     {
         "constant": true,
-        "inputs": [],
-        "name": "sender",
-        "outputs": [
+        "inputs": [
             {
                 "name": "",
                 "type": "address"
             }
         ],
+        "name": "accountsToGoals",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "payable": false,
         "stateMutability": "view",
         "type": "function",
-        "signature": "0x67e404ce"
+        "signature": "0x52c33b1c"
     },
     {
-        "constant": true,
-        "inputs": [],
-        "name": "receiver",
-        "outputs": [
+        "constant": false,
+        "inputs": [
             {
-                "name": "",
-                "type": "address"
+                "name": "_goal",
+                "type": "uint256"
             }
         ],
+        "name": "createPiggyBank",
+        "outputs": [],
         "payable": false,
-        "stateMutability": "view",
+        "stateMutability": "nonpayable",
         "type": "function",
-        "signature": "0xf7260d3e"
+        "signature": "0x4adc5fa3"
     },
     {
         "constant": false,
@@ -53,21 +63,6 @@ let abi = [
         "stateMutability": "payable",
         "type": "function",
         "signature": "0xd0e30db0"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "viewApprover",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "pure",
-        "type": "function",
-        "signature": "0xd93ce89c"
     },
     {
         "constant": false,
